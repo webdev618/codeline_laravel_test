@@ -1,0 +1,5 @@
+
+.pagination-center .pagination {
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+}
