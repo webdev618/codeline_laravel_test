@@ -2,23 +2,21 @@
 
 @section('content')
 <div class="container">
-    @foreach ($films as $film)
     <div class="row justify-content-center">
         <div class="col-md-8 mb-4">
+            @if ($film)
             <div class="card">
-                <a href="{{ url('/films/' . $film->slug) }}" title="{{ $film->name }}">
-                    <img class="card-img-top" src="{{ $film->photo }}" alt="{{ $film->name }}">
-                </a>
+                <img class="card-img-top" src="{{ $film->photo }}" alt="{{ $film->name }}">
 
                 <div class="card-body">
-                    <h2 class="card-title"><a href="{{ url('/films/' . $film->slug) }}" title="{{ $film->name }}">{{ $film->name }}</a></h2>
+                    <h2 class="card-title">{{ $film->name }}</h2>
                     <p class="card-text">
                         @for ($i = 0; $i < $film->rating; $i++)
-                            <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
                         @endfor
 
                         @for ($i = $film->rating; $i < 5; $i++)
-                            <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-o"></i>
                         @endfor
                     </p>
                     <p class="card-text">
@@ -34,7 +32,7 @@
                             $genres = explode(',', $film->genre);
                             ?>
                             @for ($i = 0; $i < count($genres); $i++)
-                                {{ $genres[$i] }}@if ($i != count($genres) - 1),@endif
+                            {{ $genres[$i] }}@if ($i != count($genres) - 1),@endif
                             @endfor
                         </div>
                     </div>
@@ -45,11 +43,8 @@
                     <div class="float-right"><i class="fa fa-calendar"></i> {{ $film->release_date }}</div>
                 </div>
             </div>
+            @endif
         </div>
-    </div>
-    @endforeach
-    <div class="pagination-center">
-        {{ $films->links() }}
     </div>
 </div>
 @endsection

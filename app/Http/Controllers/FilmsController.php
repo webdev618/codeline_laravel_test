@@ -30,6 +30,18 @@ class FilmsController extends Controller
     }
 
     /**
+     * Display a item of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function view($slug)
+    {
+        $film = Film::where('slug', $slug)->firstOrFail();
+
+        return view('film', ['film' => $film]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

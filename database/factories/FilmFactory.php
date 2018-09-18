@@ -7,8 +7,11 @@ $factory->define(App\Film::class, function (Faker $faker) {
     for ($i = 0; $i < $faker->numberBetween(1, 5); $i++) {
         $genres[] = $faker->word(1);
     }
+    $name = substr($faker->sentence(2), 0, -1);
+    $slug = str_slug($name, '-');
     return [
-        'name' => substr($faker->sentence(2), 0, -1),
+        'name' => $name,
+        'slug' => $slug,
         'description' => $faker->paragraph(6),
         'release_date' => $faker->dateTimeBetween('-5 years'),
         'rating' => $faker->numberBetween(1, 5),
