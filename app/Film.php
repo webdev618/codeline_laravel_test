@@ -19,4 +19,9 @@ class Film extends Model
         'url',
         'description'
     ];
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment', 'film_id');
+    }
 }

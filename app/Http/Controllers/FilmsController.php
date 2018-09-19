@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Film;
+use App\Comment;
 use Illuminate\Http\Request;
 use PragmaRX\Countries\Package\Countries;
 use Illuminate\Support\Facades\Storage;
@@ -89,6 +90,29 @@ class FilmsController extends Controller
         $film = tap(new Film($data))->save();
 
         return view('film.view', ['film' => $film, 'film_created' => true]);
+    }
+
+    /**
+     * Store a newly created comment in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function comment(Request $request, $slug)
+    {
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'comment' => 'required',
+        ]);
+
+        $film = Film::where('slug', $slug)->firstOrFail();
+
+        $data['film_id'] = $film->id;
+
+        // create comment
+        $comment = tap(new Comment($data))->save();
+
+        return view('film.view', ['film' => $film, 'comment_created' => true]);
     }
 
     /**

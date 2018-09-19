@@ -26,4 +26,7 @@ Route::post('/films/store', 'FilmsController@store')->name('film_store');
 Route::get('/films', 'FilmsController@index')->name('films');
 
 Route::get('/films/{slug}', 'FilmsController@view')->name('film');
+Route::get('/films/{slug}/comment', 'FilmsController@view')->name('film_view');
+
+Route::post('/films/{slug}/comment', 'FilmsController@comment')->name('film_comment');
 
