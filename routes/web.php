@@ -19,6 +19,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/films/create', 'FilmsController@create')->name('film_create');
+
+Route::post('/films/store', 'FilmsController@store')->name('film_store');
+
 Route::get('/films', 'FilmsController@index')->name('films');
 
 Route::get('/films/{slug}', 'FilmsController@view')->name('film');
+

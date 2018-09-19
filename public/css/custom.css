@@ -3,3 +3,8 @@
     -ms-flex-pack: center!important;
     justify-content: center!important;
 }
+
+.select2-container--bootstrap4 .select2-results > .select2-results__options {
+    max-height: 300px;
+    overflow-y: auto;
+}

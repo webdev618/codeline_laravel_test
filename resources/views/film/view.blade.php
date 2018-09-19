@@ -3,7 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 mb-4">
+        <div class="col-md-8">
+            @if (isset($film_created))
+                <div class="alert alert-success" role="alert">
+                    {{ __('Successfully created new film!') }}
+                </div>
+            @endif
             @if ($film)
             <div class="card">
                 <img class="card-img-top" src="{{ $film->photo }}" alt="{{ $film->name }}">
@@ -12,11 +17,11 @@
                     <h2 class="card-title">{{ $film->name }}</h2>
                     <p class="card-text">
                         @for ($i = 0; $i < $film->rating; $i++)
-                        <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
                         @endfor
 
                         @for ($i = $film->rating; $i < 5; $i++)
-                        <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
                         @endfor
                     </p>
                     <p class="card-text">
@@ -32,7 +37,7 @@
                             $genres = explode(',', $film->genre);
                             ?>
                             @for ($i = 0; $i < count($genres); $i++)
-                            {{ $genres[$i] }}@if ($i != count($genres) - 1),@endif
+                                {{ $genres[$i] }}@if ($i != count($genres) - 1),@endif
                             @endfor
                         </div>
                     </div>

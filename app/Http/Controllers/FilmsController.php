@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Film;
 use Illuminate\Http\Request;
+use PragmaRX\Countries\Package\Countries;
+use Illuminate\Support\Facades\Storage;
 
 class FilmsController extends Controller
 {
@@ -14,7 +16,10 @@ class FilmsController extends Controller
      */
     public function __construct()
     {
-
+        // Middleware only applied to these methods
+        $this->middleware('auth', ['only' => [
+            'create', 'store' // Could add bunch of more methods too
+        ]]);
     }
 
     /**
@@ -38,7 +43,7 @@ class FilmsController extends Controller
     {
         $film = Film::where('slug', $slug)->firstOrFail();
 
-        return view('film', ['film' => $film]);
+        return view('film.view', ['film' => $film]);
     }
 
     /**
@@ -48,7 +53,8 @@ class FilmsController extends Controller
      */
     public function create()
     {
-        //
+        $countries = Countries::all()->pluck('name.common');
+        return view('film.create', ['countries' => $countries]);
     }
 
     /**
@@ -59,7 +65,30 @@ class FilmsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'slug' => 'required|unique:films|max:255',
+            'description' => 'required',
+            'release_date' => 'required|date_format:"Y-m-d H:i:s"',
+            'rating' => 'required|numeric|between:1,5',
+            'ticket_price' => 'required|numeric',
+            'country' => 'required',
+            'genre' => 'required',
+            'photo' => 'required|file|image|mimes:jpeg,jpg,png,gif,svg,webp'
+        ]);
+
+        // upload photo
+        $photo = $request->file('photo');
+        $photo_name = time() . '.' . $photo->getClientOriginalExtension();
+        $upload_path = public_path('/photos');
+        $photo->move($upload_path, $photo_name);
+
+        $data['photo'] = asset('photos/' . $photo_name);
+
+        // create film
+        $film = tap(new Film($data))->save();
+
+        return view('film.view', ['film' => $film, 'film_created' => true]);
     }
 
     /**

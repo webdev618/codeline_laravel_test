@@ -17,6 +17,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
+    <!-- Vendors -->
+    <link href="{{ asset('vendors/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendors/select2-bootstrap4/select2-bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendors/select2/css/select2.min.css') }}" rel="stylesheet">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -50,6 +55,9 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('films/create') }}">{{ __('Create New Film') }}</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -77,5 +85,18 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Vendors -->
+    <script src="{{ asset('vendors/jquery/jquery-3.3.1.min.js') }}" defer></script>
+    <script src="{{ asset('vendors/moment/moment.min.js') }}" defer></script>
+    <script src="{{ asset('vendors/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" defer></script>
+    <script src="{{ asset('vendors/select2/js/select2.full.min.js') }}" defer></script>
+    <script src="{{ asset('vendors/speakingurl/speakingurl.min.js') }}" defer></script>
+    <script src="{{ asset('vendors/jquery.stringtoslug/jquery.stringtoslug.min.js') }}" defer></script>
+
+    <!-- Custom JS -->
+    <script src="{{ asset('js/custom.js') }}" defer></script>
+
+
 </body>
 </html>
