@@ -6,7 +6,7 @@ use App\Film;
 use App\Comment;
 use Illuminate\Http\Request;
 use PragmaRX\Countries\Package\Countries;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class FilmsController extends Controller
 {
@@ -19,7 +19,7 @@ class FilmsController extends Controller
     {
         // Middleware only applied to these methods
         $this->middleware('auth', ['only' => [
-            'create', 'store' // Could add bunch of more methods too
+            'create', 'store', 'comment' // Could add bunch of more methods too
         ]]);
     }
 
@@ -101,13 +101,13 @@ class FilmsController extends Controller
     public function comment(Request $request, $slug)
     {
         $data = $request->validate([
-            'name' => 'required|max:255',
             'comment' => 'required',
         ]);
 
         $film = Film::where('slug', $slug)->firstOrFail();
 
         $data['film_id'] = $film->id;
+        $data['user_id'] = Auth::id();
 
         // create comment
         $comment = tap(new Comment($data))->save();

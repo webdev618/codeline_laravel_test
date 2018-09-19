@@ -64,12 +64,13 @@
                                     {{ $comment->comment }}
                                 </em>
                             </p>
-                            <small class="float-right">{{ $comment->name }}</small>
+                            <small class="float-right">{{ $comment->user->name }}</small>
                         </blockquote>
                     </div>
                 </div>
             @endforeach
 
+            @auth
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{ __('Leave a Comment') }}</h4>
@@ -82,16 +83,6 @@
                         @endif
 
                         {!! csrf_field() !!}
-
-                        <div class="form-group row">
-                            <label for="name" class="col-sm-3 col-form-label">{{ __('Name') }}</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control @if ($errors->has('name')) is-invalid @endif" id="name" name="name" placeholder="{{ __('Name') }}" value="{{ old('name') }}">
-                                @if ($errors->has('name'))
-                                <span class="invalid-feedback">{{ $errors->first('name') }}</span>
-                                @endif
-                            </div>
-                        </div>
 
                         <div class="form-group row">
                             <label for="comment" class="col-sm-3 col-form-label">{{ __('Comment') }}</label>
@@ -112,6 +103,7 @@
                     </form>
                 </div>
             </div>
+            @endauth
         </div>
     </div>
 </div>

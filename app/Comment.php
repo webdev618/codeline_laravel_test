@@ -8,12 +8,17 @@ class Comment extends Model
 {
     protected $fillable = [
         'film_id',
-        'name',
+        'user_id',
         'comment'
     ];
 
     public function film()
     {
         return $this->belongsTo('App\Film');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }
